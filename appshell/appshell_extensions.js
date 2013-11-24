@@ -40,6 +40,12 @@ if (!appshell.fs) {
 if (!appshell.app) {
     appshell.app = {};
 }
+
+/* make a new nexiles namespace for testing */
+if (!appshell.nexiles) {
+    appshell.nexiles = {};
+}
+
 (function () {
     // Error values. These MUST be in sync with the error values
     // at the top of appshell_extensions_platform.h.
@@ -807,6 +813,16 @@ if (!appshell.app) {
         DragWindow();
     };
  
+    /**
+     * nexiles test function
+     *
+     * @return None. This is an asynchronous call that sends all return information to the callback.
+     */
+    native function NXTestFunction();
+    appshell.nexiles.testFunction = function (argument, callback) {
+        NXTestFunction( callback || _dummyCallback, argument);
+    };
+
     // Alias the appshell object to brackets. This is temporary and should be removed.
     brackets = appshell;
 })();

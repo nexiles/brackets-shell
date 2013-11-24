@@ -680,8 +680,22 @@ public:
         } else if (message_name == "DragWindow") {     
             // Parameters: none       
             DragWindow(browser);
-        } 
-        else {
+        } else if (message_name == "NXTestFunction") {
+            fprintf(stderr, "Called NXTestFunction with message id: %s\n", message_name.c_str());
+            // Parameters:
+            //  0: int32 - callback id
+            //  1: string - argument
+            if (argList->GetSize() != 2 ||
+                argList->GetType(1) != VTYPE_STRING) {
+                error = ERR_INVALID_PARAMS;
+            }
+            
+            if (error == NO_ERROR) {
+                ExtensionString argument = argList->GetString(1);
+                std::string ret = "hello from native code";
+                responseArgs->SetString(2, ret);
+            }
+        } else {
             fprintf(stderr, "Native function not implemented yet: %s\n", message_name.c_str());
             return false;
         }
